@@ -427,6 +427,7 @@ def get_holders(device):
     # get holders
     hpath = os.path.join(sysfs_path, 'holders')
     holders = os.listdir(hpath)
+    holders.sort()
     LOG.debug("devname '%s' had holders: %s", device, holders)
     return holders
 
