@@ -622,6 +622,7 @@ def clear_holders(base_paths, try_preserve=False):
 
     # run shutdown functions
     for dev_info in ordered_devs:
+        LOG.info(f"khanhtv dev_info : {dev_info}")
         dev_type = DEV_TYPES.get(dev_info['dev_type'])
         shutdown_function = dev_type.get('shutdown')
         if not shutdown_function:
