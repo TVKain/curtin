@@ -615,6 +615,9 @@ def clear_holders(base_paths, try_preserve=False):
 
     # get current holders and plan how to shut them down
     holder_trees = [gen_holders_tree(path) for path in base_paths]
+
+    LOG.info(f"khanhtv holder trees {holder_trees}")
+
     LOG.info('Current device storage tree:\n%s',
              '\n'.join(format_holders_tree(tree) for tree in holder_trees))
     ordered_devs = plan_shutdown_holder_trees(holder_trees)
