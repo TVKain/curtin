@@ -616,7 +616,20 @@ def clear_holders(base_paths, try_preserve=False):
     # get current holders and plan how to shut them down
     holder_trees = [gen_holders_tree(path) for path in base_paths]
 
-    LOG.info(f"khanhtv holder trees {holder_trees}")
+    LOG.info(f"khanhtv After {holder_trees}")
+    # filter out dev type 'partition' which has dev type 'raid' siblings
+    for holder_tree in holder_trees:
+        if len(holder_tree['holders']) != 0:
+            contain_raid = False
+            # Check if raid is here 
+            for holder in holder_tree['holders']:
+                if holder["dev_type"] == "raid":
+                    contain_raid = True
+                    break 
+            # If there is raid remove all 'partition'
+            if contain_raid:
+                holder_tree['holders'] = [holder for holder in holder_tree['holders'] if holder["dev_type"] != "partition"]
+    LOG.info(f"khanhtv Before {holder_trees}")
 
     LOG.info('Current device storage tree:\n%s',
              '\n'.join(format_holders_tree(tree) for tree in holder_trees))
